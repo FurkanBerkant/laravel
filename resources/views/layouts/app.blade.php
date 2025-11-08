@@ -22,7 +22,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="/" class="text-2xl font-bold text-indigo-600">
+                    <a href="{{ route('home') }}" class="text-2xl font-bold text-indigo-600">
                         🛒 PazarYeri
                     </a>
                 </div>
@@ -30,11 +30,11 @@
                 <!-- Menu -->
                 <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
                     <a href="{{ route('categories.index') }}"
-                       class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                       class="{{ request()->routeIs('categories.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Kategoriler
                     </a>
-                    <a href="#"
-                       class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    <a href="{{ route('products.index') }}"
+                       class="{{ request()->routeIs('products.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Ürünler
                     </a>
                     <a href="#"
