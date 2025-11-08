@@ -89,6 +89,13 @@ use \Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder<static>|Product whereWidth($value)
  * @method static Builder<static>|Product withTrashed(bool $withTrashed = true)
  * @method static Builder<static>|Product withoutTrashed()
+ * @property string|null $long_description
+ * @property string|null $description
+ * @property int $brand_id
+ * @property-read \App\Models\Brand $brand
+ * @method static Builder<static>|Product whereBrandId($value)
+ * @method static Builder<static>|Product whereDescription($value)
+ * @method static Builder<static>|Product whereLongDescription($value)
  * @mixin \Eloquent
  */
 class Product extends Model
@@ -98,6 +105,7 @@ class Product extends Model
 
     protected $fillable = [
         'category_id',
+        'brand_id',
         'name',
         'slug',
         'sku',
@@ -170,6 +178,11 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
     }
 
     public function scopeActive($query)

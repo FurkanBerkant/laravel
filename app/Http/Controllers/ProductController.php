@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use \Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+
 class ProductController extends Controller
 {
     /**
@@ -130,7 +132,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         $categories = Category::active()->orderBy('name')->get();
         return view('products.edit', compact('product', 'categories'));
@@ -140,7 +142,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): RedirectResponse
     {
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
@@ -169,9 +171,7 @@ class ProductController extends Controller
             'order' => 'nullable|integer|min:0',
         ]);
 
-        // Ana resim güncelle
         if ($request->hasFile('main_image')) {
-            // Eski resmi sil
             if ($product->main_image) {
                 Storage::disk('public')->delete($product->main_image);
             }
@@ -179,9 +179,7 @@ class ProductController extends Controller
                 ->store('products/main', 'public');
         }
 
-        // Ek resimleri güncelle
         if ($request->hasFile('images')) {
-            // Eski resimleri sil
             if ($product->images) {
                 foreach ($product->images as $oldImage) {
                     Storage::disk('public')->delete($oldImage);
@@ -195,7 +193,6 @@ class ProductController extends Controller
             $validated['images'] = $imagePaths;
         }
 
-        // Güncelle
         $product->update($validated);
 
         return redirect()
@@ -207,7 +204,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         if ($product->main_image) {
             Storage::disk('public')->delete($product->main_image);
@@ -219,7 +216,6 @@ class ProductController extends Controller
             }
         }
 
-        // Soft delete
         $product->delete();
 
         return redirect()

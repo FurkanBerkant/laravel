@@ -37,10 +37,15 @@
                        class="{{ request()->routeIs('products.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Ürünler
                     </a>
+                    <a href="{{route('brands.index') }}"
+                       class="{{request()-> routeIs('brands.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Markalar
+                    </a>
                     <a href="#"
                        class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         Siparişler
                     </a>
+
                 </div>
             </div>
         </div>
