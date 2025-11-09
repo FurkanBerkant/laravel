@@ -98,7 +98,7 @@ class CategoryController extends Controller
             $validated['image'] = $imagePath;
         }
 
-        Category::create($validated);
+        $category->update($validated);
 
         return redirect()
             ->route('categories.index')
