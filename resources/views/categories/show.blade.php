@@ -68,80 +68,89 @@
                     @endif
 
                     <!-- İşlem Butonları -->
-                    <div class="flex gap-3">
-                        <a href="{{ route('categories.edit', $category) }}"
-                           class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-center py-2 rounded font-semibold">
-                            ✏️ Düzenle
-                        </a>
-                        <form action="{{ route('categories.destroy', $category) }}"
-                              method="POST"
-                              class="flex-1"
-                              onsubmit="return confirm('Bu kategoriyi ve içindeki {{ $category->products_count }} ürünü silmek istediğinize emin misiniz?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                    class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded font-semibold">
-                                🗑️ Sil
-                            </button>
-                        </form>
-                    </div>
+                    @role('admin')
+                        <div class="flex gap-3">
+                            <a href="{{ route('categories.edit', $category) }}"
+                               class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-center py-2 rounded font-semibold">
+                                ✏️ Düzenle
+                            </a>
+                            <form action="{{ route('categories.destroy', $category) }}"
+                                  method="POST"
+                                  class="flex-1"
+                                  onsubmit="return confirm('Bu kategoriyi ve içindeki {{ $category->products_count }} ürünü silmek istediğinize emin misiniz?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded font-semibold">
+                                    🗑️ Sil
+                                </button>
+                            </form>
+                        </div>
+                    @endrole
                 </div>
             </div>
 
             <!-- İstatistikler -->
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <h3 class="text-xl font-semibold mb-4">İstatistikler</h3>
+            @role('admin')
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">İstatistikler</h3>
 
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-600">Toplam Ürün:</span>
-                        <span class="text-2xl font-bold text-indigo-600">
-                        {{ $category->products()->count() }}
-                    </span>
-                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Toplam Ürün:</span>
+                            <span class="text-2xl font-bold text-indigo-600">
+                            {{ $category->products()->count() }}
+                        </span>
+                        </div>
 
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-600">Aktif Ürünler:</span>
-                        <span class="text-2xl font-bold text-green-600">
-                        {{ $category->activeProducts()->count() }}
-                    </span>
-                    </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Aktif Ürünler:</span>
+                            <span class="text-2xl font-bold text-green-600">
+                            {{ $category->activeProducts()->count() }}
+                        </span>
+                        </div>
 
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-600">Stokta Ürünler:</span>
-                        <span class="text-2xl font-bold text-blue-600">
-                        {{ $category->products()->inStock()->count() }}
-                    </span>
-                    </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Stokta Ürünler:</span>
+                            <span class="text-2xl font-bold text-blue-600">
+                            {{ $category->products()->inStock()->count() }}
+                        </span>
+                        </div>
 
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-600">Öne Çıkan:</span>
-                        <span class="text-2xl font-bold text-yellow-600">
-                        {{ $category->products()->featured()->count() }}
-                    </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tarih Bilgileri -->
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <h3 class="text-xl font-semibold mb-4">Tarih Bilgileri</h3>
-
-                <div class="space-y-3">
-                    <div>
-                        <span class="text-gray-600 text-sm">Oluşturulma:</span>
-                        <p class="font-semibold">{{ $category->created_at->format('d.m.Y H:i') }}</p>
-                        <p class="text-xs text-gray-500">{{ $category->created_at->diffForHumans() }}</p>
-                    </div>
-
-                    <div>
-                        <span class="text-gray-600 text-sm">Son Güncelleme:</span>
-                        <p class="font-semibold">{{ $category->updated_at->format('d.m.Y H:i') }}</p>
-                        <p class="text-xs text-gray-500">{{ $category->updated_at->diffForHumans() }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Öne Çıkan:</span>
+                            <span class="text-2xl font-bold text-yellow-600">
+                            {{ $category->products()->featured()->count() }}
+                        </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                <!-- Tarih Bilgileri -->
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Tarih Bilgileri</h3>
+
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-gray-600 text-sm">Oluşturulma:</span>
+                            <p class="font-semibold">{{ $category->created_at->format('d.m.Y H:i') }}</p>
+                            <p class="text-xs text-gray-500">{{ $category->created_at->diffForHumans() }}</p>
+                        </div>
+
+                        <div>
+                            <span class="text-gray-600 text-sm">Son Güncelleme:</span>
+                            <p class="font-semibold">{{ $category->updated_at->format('d.m.Y H:i') }}</p>
+                            <p class="text-xs text-gray-500">{{ $category->updated_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+                </div>
+            @else
+                {{-- Sadece yetkisiz kullanıcılar için mesaj --}}
+                <div class="py-20 text-center">
+                    <h2 class="text-4xl font-extrabold text-red-600 mb-4">Erişim Engellendi</h2>
+                    <p class="text-lg text-gray-700">Bu yönetim sayfasını görüntüleme yetkiniz bulunmamaktadır.</p>
+                </div>
+            @endrole
         </div>
 
         <!-- Sol Kolon - Kategorideki Ürünler -->
@@ -156,10 +165,12 @@
                         <span class="text-lg text-gray-500">({{ $category->products_count }})</span>
                     </h2>
 
-                    <a href="{{ route('products.create') }}?category_id={{ $category->id }}"
-                       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm">
-                        + Ürün Ekle
-                    </a>
+                    @role('admin')
+                        <a href="{{ route('products.create') }}?category_id={{ $category->id }}"
+                           class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm">
+                            + Ürün Ekle
+                        </a>
+                    @endrole
                 </div>
 
                 <!-- Ürün Listesi -->
@@ -288,20 +299,21 @@
                     @endif
 
                 @else
-                    <!-- Ürün Yoksa -->
-                    <div class="text-center py-12">
-                        <div class="text-6xl mb-4">📦</div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">
-                            Bu kategoride henüz ürün yok
-                        </h3>
-                        <p class="text-gray-600 mb-6">
-                            İlk ürünü ekleyerek başlayın!
-                        </p>
-                        <a href="{{ route('products.create') }}?category_id={{ $category->id }}"
-                           class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md font-semibold">
-                            + İlk Ürünü Ekle
-                        </a>
-                    </div>
+                        <div class="text-center py-12">
+                            <div class="text-6xl mb-4">📦</div>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">
+                                Bu kategoride henüz ürün yok
+                            </h3>
+                            @role('admin')
+                                <p class="text-gray-600 mb-6">
+                                    İlk ürünü ekleyerek başlayın!
+                                </p>
+                                <a href="{{ route('products.create') }}?category_id={{ $category->id }}"
+                                   class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-md font-semibold">
+                                    + İlk Ürünü Ekle
+                                </a>
+                            @endrole
+                        </div>
                 @endif
 
             </div>

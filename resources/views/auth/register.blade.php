@@ -3,41 +3,29 @@
 @section('title', 'Hesap Oluştur - PazarYeri Admin')
 
 @section('content')
-    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-lg w-full space-y-8 bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+        <div class="max-w-lg w-full space-y-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-10 transition-colors duration-300">
             <!-- Başlık ve Logo -->
             <div class="text-center">
                 <div class="mx-auto h-16 w-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg">
                     <i class="fas fa-store text-white text-2xl"></i>
                 </div>
-                <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+                <h2 class="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
                     PazarYeri Admin
                 </h2>
-                <p class="mt-2 text-sm text-gray-600">
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                     Yeni hesap oluşturun
                 </p>
             </div>
 
-            <!-- Başarı Mesajı -->
-            @if(session('success'))
-                <div class="bg-green-50 border-l-4 border-green-400 p-4 rounded-lg">
-                    <div class="flex items-center">
-                        <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                        <div>
-                            <p class="text-green-700 font-medium">{{ session('success') }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <!-- Hata Mesajları -->
             @if($errors->any())
-                <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+                <div class="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-400 p-4 rounded-lg">
                     <div class="flex">
                         <i class="fas fa-exclamation-triangle text-red-400 mr-3 mt-0.5"></i>
                         <div>
-                            <p class="text-red-700 font-medium mb-2">Kayıt sırasında hata oluştu:</p>
-                            <ul class="text-red-600 text-sm list-disc list-inside space-y-1">
+                            <p class="text-red-700 dark:text-red-300 font-medium mb-2">Kayıt sırasında hata oluştu:</p>
+                            <ul class="text-red-600 dark:text-red-300 text-sm list-disc list-inside space-y-1">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
@@ -55,7 +43,7 @@
                     <!-- Ad Soyad -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 <i class="fas fa-user mr-2 text-gray-400"></i>
                                 Ad
                             </label>
@@ -66,14 +54,14 @@
                                     type="text"
                                     value="{{ old('first_name') }}"
                                     required
-                                    class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
+                                    class="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
                                     placeholder="Adınız"
                                 >
                             </div>
                         </div>
 
                         <div>
-                            <label for="last_name" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                 <i class="fas fa-user mr-2 text-gray-400"></i>
                                 Soyad
                             </label>
@@ -84,7 +72,7 @@
                                     type="text"
                                     value="{{ old('last_name') }}"
                                     required
-                                    class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
+                                    class="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
                                     placeholder="Soyadınız"
                                 >
                             </div>
@@ -93,7 +81,7 @@
 
                     <!-- Email Input -->
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <i class="fas fa-envelope mr-2 text-gray-400"></i>
                             E-posta Adresi
                         </label>
@@ -104,7 +92,7 @@
                                 type="email"
                                 value="{{ old('email') }}"
                                 required
-                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
+                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
                                 placeholder="ornek@email.com"
                             >
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -115,7 +103,7 @@
 
                     <!-- Şifre Input -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <i class="fas fa-lock mr-2 text-gray-400"></i>
                             Şifre
                         </label>
@@ -125,11 +113,11 @@
                                 name="password"
                                 type="password"
                                 required
-                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
+                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
                                 placeholder="Şifrenizi girin"
                             >
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <button type="button" onclick="togglePassword('password')" class="text-gray-400 hover:text-gray-600">
+                                <button type="button" onclick="togglePassword('password')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
@@ -138,7 +126,7 @@
 
                     <!-- Şifre Tekrarı -->
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             <i class="fas fa-lock mr-2 text-gray-400"></i>
                             Şifre Tekrarı
                         </label>
@@ -148,16 +136,30 @@
                                 name="password_confirmation"
                                 type="password"
                                 required
-                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
+                                class="appearance-none relative block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 transition-all duration-200"
                                 placeholder="Şifrenizi tekrar girin"
                             >
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                <button type="button" onclick="togglePassword('password_confirmation')" class="text-gray-400 hover:text-gray-600">
+                                <button type="button" onclick="togglePassword('password_confirmation')" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Kullanım Koşulları -->
+                <div class="flex items-center">
+                    <input
+                        id="terms"
+                        name="terms"
+                        type="checkbox"
+                        required
+                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded"
+                    >
+                    <label for="terms" class="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+                        <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Kullanım koşullarını</a> okudum ve kabul ediyorum
+                    </label>
                 </div>
 
                 <!-- Kayıt Butonu -->
@@ -174,10 +176,10 @@
                 </div>
 
                 <!-- Giriş Yapma Linki -->
-                <div class="text-center pt-4 border-t border-gray-200">
-                    <p class="text-sm text-gray-600">
+                <div class="text-center pt-4 border-t border-gray-200 dark:border-gray-600">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
                         Zaten hesabınız var mı?
-                        <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors ml-1">
+                        <a href="{{ route('login') }}" class="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors ml-1">
                             <i class="fas fa-sign-in-alt mr-1"></i>
                             Giriş Yap
                         </a>

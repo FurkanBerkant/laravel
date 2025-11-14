@@ -4,6 +4,7 @@
 @section('title', 'Ürünler')
 
 @section('content')
+    @role('admin')
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-900">Ürünler</h1>
 
@@ -12,6 +13,7 @@
             + Yeni Ürün Ekle
         </a>
     </div>
+    @endrole
 
     <!-- Filtreleme ve Arama -->
     <div class="bg-white shadow-md rounded-lg p-4 mb-6">
@@ -200,6 +202,7 @@
                 </div>
             </div>
         @empty
+            @role('admin')
             <div class="md:col-span-4 text-center py-12">
                 <p class="text-gray-500 text-lg mb-4">Henüz ürün eklenmemiş.</p>
                 <a href="{{ route('products.create') }}"
@@ -207,6 +210,7 @@
                     İlk Ürünü Ekle
                 </a>
             </div>
+            @endrole
         @endforelse
     </div>
 
@@ -216,6 +220,7 @@
     </div>
 
     <!-- İstatistikler -->
+    @role('admin')
     <div class="mt-8 bg-white shadow-md rounded-lg p-6">
         <h3 class="text-lg font-semibold mb-4">Hızlı İstatistikler</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -243,4 +248,5 @@
             </div>
         </div>
     </div>
+    @endrole
 @endsection

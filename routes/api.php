@@ -1,14 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\BrandController;
-use App\Http\Controllers\OrderController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->get('/me', [AuthController::class, 'me']);
 
-
-Route::apiResource('brands', BrandController::class);

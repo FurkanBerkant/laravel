@@ -3,6 +3,7 @@
 @section('title', 'Kategoriler')
 
 @section('content')
+    @role('admin')
     <div class="mb-6 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-900">Kategoriler</h1>
 
@@ -11,7 +12,7 @@
             + Yeni Kategori
         </a>
     </div>
-
+    @endrole
     <!-- Kategoriler Tablosu -->
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
@@ -74,6 +75,7 @@
                            class="text-indigo-600 hover:text-indigo-900 mr-3">
                             Görüntüle
                         </a>
+                        @role('admin')
                         <a href="{{ route('categories.edit', $category) }}"
                            class="text-yellow-600 hover:text-yellow-900 mr-3">
                             Düzenle
@@ -88,9 +90,12 @@
                                 Sil
                             </button>
                         </form>
+                        @endrole
+
                     </td>
                 </tr>
             @empty
+                @role('admin')
                 <tr>
                     <td colspan="6" class="px-6 py-4 text-center text-gray-500">
                         Henüz kategori eklenmemiş.
@@ -99,6 +104,7 @@
                         </a>
                     </td>
                 </tr>
+                @endrole
             @endforelse
             </tbody>
         </table>

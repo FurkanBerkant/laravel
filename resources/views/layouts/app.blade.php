@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PazarYeri Admin Paneli - E-ticaret yönetim sistemi">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'PazarYeri Admin')</title>
 
     <!-- Tailwind CSS CDN -->
@@ -46,11 +47,13 @@
                             <i class="fas fa-box mr-2"></i>
                             Ürünler
                         </a>
+                        @role('admin')
                         <a href="{{ route('brands.index') }}"
                            class="{{ request()->routeIs('brands.*') ? 'text-indigo-600 border-indigo-500' : 'text-gray-600 hover:text-gray-900 border-transparent' }} inline-flex items-center px-3 py-2 border-b-2 font-medium transition-colors">
                             <i class="fas fa-copyright mr-2"></i>
                             Markalar
                         </a>
+                        @endrole
                         <a href="#"
                            class="text-gray-600 hover:text-gray-900 border-transparent inline-flex items-center px-3 py-2 border-b-2 font-medium transition-colors">
                             <i class="fas fa-shopping-cart mr-2"></i>
@@ -157,35 +160,6 @@
                     </div>
                     <div class="ml-3">
                         <p class="text-sm text-red-700">{{ session('error') }}</p>
-                    </div>
-                    <div class="ml-auto pl-3">
-                        <div class="-mx-1.5 -my-1.5">
-                            <button class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600 flash-close transition-colors">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-            <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-md shadow-sm">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <i class="fas fa-exclamation-triangle text-red-400 text-lg"></i>
-                    </div>
-                    <div class="ml-3">
-                        <h3 class="text-sm font-medium text-red-800">Formda {{ $errors->count() }} hata bulundu</h3>
-                        <div class="mt-2 text-sm text-red-700">
-                            <ul class="list-disc pl-5 space-y-1">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
                     </div>
                     <div class="ml-auto pl-3">
                         <div class="-mx-1.5 -my-1.5">

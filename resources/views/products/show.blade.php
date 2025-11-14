@@ -161,6 +161,7 @@
                 @endif
 
                 <!-- İşlem Butonları -->
+                @role('admin')
                 <div class="flex gap-3 mb-4">
                     <a href="{{ route('products.edit', $product) }}"
                        class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white text-center py-3 rounded-md font-semibold">
@@ -178,6 +179,7 @@
                         </button>
                     </form>
                 </div>
+                @endrole
             </div>
 
             <!-- Stok Bilgileri -->
