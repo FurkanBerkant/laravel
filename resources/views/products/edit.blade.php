@@ -68,6 +68,26 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="mb-4">
+                            <label for="brand_id" class="block text-sm font-medium text-gray-700 mb-2">
+                                Marka *
+                            </label>
+                            <select name="brand_id"
+                                    id="brand_id"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 @error('brand_id') border-red-500 @enderror"
+                                    required>
+                                <option value="">Marka Seçin</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}"
+                                        {{ old('brand_id', $product->brand_id) ==  $brand-> id ? 'selected' : '' }}>
+                                        {{ $brand->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('brand_id')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
                         <!-- SKU -->
                         <div class="mb-4">
@@ -465,6 +485,7 @@
 
                         <div class="space-y-3">
                             <label class="flex items-center cursor-pointer">
+                                <input type="hidden" name="is_active" value="0">
                                 <input type="checkbox"
                                        name="is_active"
                                        value="1"

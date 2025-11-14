@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -14,46 +15,46 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // app/Http/Controllers/ProductController.php
+
     public function index(Request $request): View
     {
-        $query = Product::with('category');
+        $products = Product::query();
+        $products->when($request->category_id, function ($query, $category_id) {
+            $query->where('category_id', $category_id);
+        });
 
-        if ($request->has('category_id') && request()->category_id != '' ) {
-            $query->where('category_id', request()->category_id);
-        }
-        if($request-> has('search')){
-            $query->where(function ($q) use ($request){
-                $q-> where ('name', 'like', '%' . $request->get('search') . '%')
-                    ->orWhere('sku', 'like', '%' . $request->get('search') . '%')
-                    ->orWhere('description', 'like', '%' . $request->get('search') . '%');
-            });
-        }
+        $products->when($request->search, function ($query, $search) {
+            $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('sku', 'LIKE', '%' . $search . '%');
+        });
 
-        if($request->has('status')){
-            $query->where('is_active' , $request->get('status'));
-        }
+        $products->when($request->filled('status'), function ($query) use ($request) {
+            $query->where('is_active', $request->get('status'));
+        });
 
-        if($request->has('stock_status')){
-            $query->where('stock_status' , $request ->get('stock_status'));
-        }
+        $products->when($request->filled('stock_status'), function ($query) use ($request) {
+            $query->where('stock_status', $request->get('stock_status'));
+        });
 
         $sortBy = $request->get('sort_by', 'created_at');
         $sortOrder = $request->get('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
+        $products->orderBy($sortBy, $sortOrder);
 
-        $products = $query->paginate(20)->appends($request->all());
+        $products = $products->paginate(20)->appends($request->all());
 
-        $categories = Category::active() -> orderBy('name') -> get();
-        return view('products.index', compact('products', 'categories'));
+        $categories = Category::active()->orderBy('name')->get();
+        $brands = Brand::all();
+        return view('products.index', compact('products', 'categories','brands'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create(): View
     {
         $categories = Category::active() -> orderBy('name') -> get();
-        return view('products.create', compact('categories'));
+        $brands = Brand::all();
+        return view('products.create', compact('categories','brands'));
     }
 
     /**
@@ -63,6 +64,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
             'name' => 'required|string|max:255',
             'sku' => 'nullable|string|unique:products,sku',
             'description' => 'nullable|string',
@@ -89,6 +91,8 @@ class ProductController extends Controller
         ], [
             'category_id.required' => 'Kategori seçimi zorunludur',
             'category_id.exists' => 'Geçersiz kategori',
+            'brand_id.required' => 'Marka seçimi zorunludur',
+            'brand_id.exists' => 'Geçersiz marka',
             'name.required' => 'Ürün adı zorunludur',
             'price.required' => 'Fiyat zorunludur',
             'price.min' => 'Fiyat 0\'dan küçük olamaz',
@@ -135,7 +139,8 @@ class ProductController extends Controller
     public function edit(Product $product): View
     {
         $categories = Category::active()->orderBy('name')->get();
-        return view('products.edit', compact('product', 'categories'));
+        $brands = Brand::all();
+        return view('products.edit', compact('product', 'categories','brands'));
 
     }
 
